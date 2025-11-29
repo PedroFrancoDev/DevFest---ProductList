@@ -9,7 +9,6 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar(
         onTap: () {
@@ -25,22 +24,22 @@ class FavoritesScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
-              child: GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 20,
-                childAspectRatio: size.width / (size.height * 0.71),
-                children: List.generate(10, (index) {
-                  return ProductCard();
-                }),
-              ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+          child: GridView.builder(
+            itemCount: 10,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 18,
+              mainAxisSpacing: 18,
+              childAspectRatio: 0.75,
             ),
-          ],
+            itemBuilder: (context, index) {
+              return ProductCard();
+            },
+          ),
         ),
       ),
     );
