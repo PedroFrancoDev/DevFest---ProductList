@@ -1,4 +1,4 @@
-import 'package:dev_fest_productl_list/pages/splash/splash.dart';
+import 'package:dev_fest_product_list/pages/splash/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {

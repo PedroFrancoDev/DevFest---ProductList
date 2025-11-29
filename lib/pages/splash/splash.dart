@@ -1,5 +1,6 @@
-import 'package:dev_fest_productl_list/pages/home/home_page.dart';
-import 'package:dev_fest_productl_list/theme/colors.dart';
+
+import 'package:dev_fest_product_list/pages/list_view_page.dart';
+import 'package:dev_fest_product_list/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => const ListViewPage(),
         ),
       );
     });
@@ -26,9 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.primary,
       body: Center(
-        child: Image.asset("assets/fashion-shoes-sneakers.png", width: 800,),
+        child: Image.asset("assets/tênis.png", width: 800,),
       ),
     );
   }

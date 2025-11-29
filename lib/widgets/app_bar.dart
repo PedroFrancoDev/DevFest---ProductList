@@ -1,4 +1,4 @@
-import 'package:dev_fest_productl_list/theme/colors.dart';
+import 'package:dev_fest_product_list/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.hasBorderBottom = true,
     this.hasBackButton = true,
     this.hasBackIconButton = true,
-    this.backgroundColor = AppColors.white,
+    this.backgroundColor = Colors.white,
     this.arrowRigth = 0,
   });
 
@@ -38,7 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           decoration: BoxDecoration(
             border: Border(
               bottom: hasBorderBottom
-                  ? BorderSide(color: AppColors.background, width: 1.5)
+                  ? BorderSide(color: Colors.grey.shade100, width: 1.5)
                   : BorderSide.none,
             ),
           ),
@@ -56,7 +56,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onTap: () => onTap(),
                   child: Icon(
                     hasBackIconButton ? Icons.arrow_back : Icons.close,
-                    color: AppColors.background,
+                    color: AppColors.primaryDark4,
                     weight: 22,
                   ),
                 ),
@@ -67,7 +67,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: AppColors.softBlack,
+                color: AppColors.primaryDark4,
               ),
             ),
             if (actionIcon == null) SizedBox(height: 22, width: 22),

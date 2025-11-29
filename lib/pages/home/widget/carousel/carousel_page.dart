@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dev_fest_productl_list/pages/home/widget/carousel/images_list.dart';
-import 'package:dev_fest_productl_list/theme/colors.dart';
+import 'package:dev_fest_product_list/pages/home/widget/carousel/images_list.dart';
+import 'package:dev_fest_product_list/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Carousel extends StatefulWidget {
@@ -43,7 +43,7 @@ class _CarouselState extends State<Carousel> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.neutralGrey.withAlpha(
+                    color: Colors.grey.withAlpha(
                       (0.15 * 255).toInt(),
                     ),
                     blurRadius: 8,
@@ -59,10 +59,10 @@ class _CarouselState extends State<Carousel> {
           children: [
             Spacer(),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
               decoration: BoxDecoration(
-                color: AppColors.caramel.withAlpha((0.25 * 255).toInt()),
-                borderRadius: BorderRadius.circular(8),
+                color: AppColors.primary.withAlpha((0.25 * 255).toInt()),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -75,8 +75,8 @@ class _CarouselState extends State<Carousel> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: _currentIndex == index
-                          ? AppColors.accent
-                          : AppColors.neutralGrey.withAlpha(
+                          ? AppColors.primary
+                          : Colors.grey.withAlpha(
                               (0.4 * 255).toInt(),
                             ),
                     ),

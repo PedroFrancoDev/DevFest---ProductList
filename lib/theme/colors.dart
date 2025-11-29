@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color background = Color(0xFFF5F0E6); // Bege principal
-  static const Color caramel = Color(0xFFD9C4B2); // Bege escuro / caramelo
-  static const Color neutralGrey = Color(0xFFA8A8A8); // Cinza neutro
-  static const Color softBlack = Color(0xFF333333); // Preto suave
-  static const Color accent = Color(0xFFFF6F61); // Cor de destaque
-    static const Color white = Color(0xFFFFFFFF); // Cor de destaque
+  // Primary
+  static const Color primary = Color(0xFF0C6EFD);
+
+  // Light Variants
+  static const Color primaryLight1 = Color(0xFF3C8CFF);
+  static const Color primaryLight2 = Color(0xFF71A9FF);
+  static const Color primaryLight3 = Color(0xFFA7C8FF);
+  static const Color primaryLight4 = Color(0xFFD6E5FF);
+
+  // Dark Variants
+  static const Color primaryDark1 = Color(0xFF0A5BD1);
+  static const Color primaryDark2 = Color(0xFF0848A4);
+  static const Color primaryDark3 = Color(0xFF063679);
+  static const Color primaryDark4 = Color(0xFF04224E);
 }
