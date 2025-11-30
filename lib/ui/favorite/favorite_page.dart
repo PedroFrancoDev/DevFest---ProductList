@@ -1,6 +1,7 @@
 
-import 'package:dev_fest_product_list/widgets/app_bar.dart';
-import 'package:dev_fest_product_list/widgets/product_card.dart';
+import 'package:dev_fest_product_list/ui/product_details/view/product_details_view.dart';
+import 'package:dev_fest_product_list/ui/core/widgets/app_bar.dart';
+import 'package:dev_fest_product_list/ui/core/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -37,7 +38,15 @@ class FavoritesScreen extends StatelessWidget {
               childAspectRatio: 0.75,
             ),
             itemBuilder: (context, index) {
-              return ProductCard();
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ProductDetailsPage(),
+                    ),
+                  );
+                },
+                child: ProductCard());
             },
           ),
         ),

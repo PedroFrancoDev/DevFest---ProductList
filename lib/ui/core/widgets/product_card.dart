@@ -1,7 +1,7 @@
 import 'dart:ui';
-import 'package:dev_fest_product_list/theme/colors.dart';
+import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:dev_fest_product_list/widgets/favorite_button.dart';
+import 'package:dev_fest_product_list/ui/core/widgets/favorite_button.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProductCard extends StatelessWidget {

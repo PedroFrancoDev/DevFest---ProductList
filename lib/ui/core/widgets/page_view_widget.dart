@@ -1,17 +1,17 @@
-import 'package:dev_fest_product_list/pages/favorite/favorite_page.dart';
-import 'package:dev_fest_product_list/theme/colors.dart';
+import 'package:dev_fest_product_list/ui/favorites/view/favorite_view.dart';
+import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:dev_fest_product_list/pages/home/home_page.dart';
+import 'package:dev_fest_product_list/ui/Home/view/home_view.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ListViewPage extends StatefulWidget {
-  const ListViewPage({super.key});
+class PageViewWidget extends StatefulWidget {
+  const PageViewWidget({super.key});
 
   @override
-  State<ListViewPage> createState() => _ListViewPageState();
+  State<PageViewWidget> createState() => _PageViewWidgetState();
 }
 
-class _ListViewPageState extends State<ListViewPage> {
+class _PageViewWidgetState extends State<PageViewWidget> {
   int _selectedIndex = 0;
   late final PageController _pageController;
 

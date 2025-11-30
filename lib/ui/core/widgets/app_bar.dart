@@ -1,4 +1,4 @@
-import 'package:dev_fest_product_list/theme/colors.dart';
+import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {

@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dev_fest_product_list/pages/home/widget/carousel/images_list.dart';
-import 'package:dev_fest_product_list/theme/colors.dart';
+import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/images_list.dart';
+import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Carousel extends StatefulWidget {

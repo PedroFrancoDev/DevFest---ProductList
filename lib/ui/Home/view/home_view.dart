@@ -1,14 +1,27 @@
-import 'package:dev_fest_product_list/pages/home/widget/carousel/carousel_page.dart';
-import 'package:dev_fest_product_list/theme/colors.dart';
-import 'package:dev_fest_product_list/widgets/app_bar.dart';
-import 'package:dev_fest_product_list/widgets/header_title.dart';
-import 'package:dev_fest_product_list/widgets/product_card.dart';
+import 'package:dev_fest_product_list/config/di/injector.dart';
+import 'package:dev_fest_product_list/data/repository/product_repository.dart';
+import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/carousel_page.dart';
+import 'package:dev_fest_product_list/ui/Home/view_model/home_view_model.dart';
+import 'package:dev_fest_product_list/ui/product_details/view/product_details_view.dart';
+import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
+import 'package:dev_fest_product_list/ui/core/widgets/app_bar.dart';
+import 'package:dev_fest_product_list/ui/core/widgets/header_title.dart';
+import 'package:dev_fest_product_list/ui/core/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final HomeViewModel viewModel = HomeViewModel(
+    productRepository: getIt<ProductRepository>(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +45,23 @@ class HomePage extends StatelessWidget {
           Row(
             children: [
               Expanded(child: buildTextField()),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: SvgPicture.asset(
-                  "assets/Filter.svg",
-                  width: 20,
-                  height: 20,
-                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              GestureDetector(
+                onTap: () => viewModel.testPrint(),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: SvgPicture.asset(
+                    "assets/Filter.svg",
+                    width: 20,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  ),
                 ),
               ),
-                     const SizedBox(width: 20),
+              const SizedBox(width: 20),
             ],
           ),
           const SizedBox(height: 16),
@@ -80,7 +96,17 @@ class HomePage extends StatelessWidget {
                         childAspectRatio: 0.75,
                       ),
                       itemBuilder: (context, index) {
-                        return ProductCard();
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProductDetailsPage(),
+                              ),
+                            );
+                          },
+                          child: ProductCard(),
+                        );
                       },
                     ),
                   ),
@@ -95,7 +121,7 @@ class HomePage extends StatelessWidget {
 
   Widget buildTextField() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.only(left: 20, right: 12),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       decoration: BoxDecoration(

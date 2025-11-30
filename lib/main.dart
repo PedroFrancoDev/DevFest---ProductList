@@ -1,7 +1,10 @@
-import 'package:dev_fest_product_list/pages/splash/splash.dart';
+import 'package:dev_fest_product_list/config/di/injector.dart';
+import 'package:dev_fest_product_list/ui/splash/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  setupInjector();
+  
   runApp(const App());
 }
 
