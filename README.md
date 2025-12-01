@@ -30,4 +30,9 @@ O projeto segue a Clean Architecture, separando responsabilidades em camadas:
 Pull requests são bem-vindos. Para grandes mudanças, abra uma issue primeiro para discutir o que você gostaria de modificar.
 
 ## Licença
-[MIT](LICENSE)
+[MIT](LICE<img width="1179" height="2556" alt="Simulator Screenshot - iPhone 15 Pro - 2025-12-01 at 01 53 33" src="https://github.com/user-attachments/assets/7d5d442c-d858-479a-958c-e99fd611625e" />
+<img width="1179" height="2556" alt="Simulator Screenshot - iPhone 15 Pro - 2025-12-01 at 01 53 28" src="https://github.com/user-attachments/assets/c8eb5e2d-7a7c-494c-a03a-3eff88d0a95c" />
+<img width="1179" height="2556" alt="Simulator Screenshot - iPhone 15 Pro - 2025-12-01 at 01 53 17" src="https://github.com/user-attachments/assets/5cb14b5e-351d-4ac5-a9af-6941d2b88c6c" />
+NSE)
+
+
