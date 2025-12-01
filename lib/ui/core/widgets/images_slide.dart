@@ -31,6 +31,8 @@ class ImagesSlide extends StatelessWidget {
     return FanCarouselImageSlider.sliderType2(
       imagesLink: images,
       isAssets: false,
+      expandedCloseChild: Padding(padding: EdgeInsets.zero),
+      sliderHeight: 300, 
       autoPlay: false,
       sliderDuration: const Duration(milliseconds: 200),
       imageRadius: 0,
@@ -38,6 +40,7 @@ class ImagesSlide extends StatelessWidget {
       indicatorActiveColor: AppColors.primary,
       imageFitMode: BoxFit.contain,
       currentItemShadow: [],
+      isClickable: false,
       sideItemsShadow: [],
     );
   }
