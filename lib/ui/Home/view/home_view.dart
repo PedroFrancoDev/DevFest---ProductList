@@ -1,5 +1,5 @@
 import 'package:dev_fest_product_list/config/di/injector.dart';
-import 'package:dev_fest_product_list/data/repository/product_repository.dart';
+import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/carousel_page.dart';
 import 'package:dev_fest_product_list/ui/Home/view_model/home_view_model.dart';
 import 'package:dev_fest_product_list/ui/product_details/view/product_details_view.dart';
@@ -20,8 +20,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomeViewModel viewModel = HomeViewModel(
-    productRepository: getIt<ProductRepository>(),
+    productRepository: getIt<IProductRepository>(),
   );
+
+  @override
+  void initState() {
+    super.initState();
+
+    viewModel.geAllProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,82 +46,102 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-          Row(
+      body: ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, _) {
+          if(viewModel.isHomeLoading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryDark3,
+                strokeWidth: 2,
+              ),
+            );
+          }
+
+          return Column(
             children: [
-              Expanded(child: buildTextField()),
-              GestureDetector(
-                onTap: () => viewModel.testPrint(),
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(12),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(child: buildTextField()),
+                  GestureDetector(
+                    onTap: () => {},
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: SvgPicture.asset(
+                        "assets/Filter.svg",
+                        width: 20,
+                        height: 20,
+                        colorFilter: ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: SvgPicture.asset(
-                    "assets/Filter.svg",
-                    width: 20,
-                    height: 20,
-                    colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  const SizedBox(width: 20),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8),
+
+                      const Carousel(),
+                      const SizedBox(height: 24),
+                      HeaderTitle(
+                        title: "Produtos em Alta",
+                        istitleRigth: false,
+                        horizontalPadding: 24,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          bottom: 24,
+                          top: 20,
+                        ),
+                        child: GridView.builder(
+                          itemCount: viewModel.products.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 18,
+                                mainAxisSpacing: 18,
+                                childAspectRatio: 0.75,
+                              ),
+                          itemBuilder: (context, index) {
+                            final product = viewModel.products[index];
+
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailsPage(productId: product.id),
+                                  ),
+                                );
+                              },
+                              child: ProductCard(product: product),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(width: 20),
             ],
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 8),
-
-                  const Carousel(),
-                  const SizedBox(height: 24),
-                  HeaderTitle(
-                    title: "Produtos em Alta",
-                    istitleRigth: false,
-                    horizontalPadding: 24,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 24,
-                      right: 24,
-                      bottom: 24,
-                      top: 20,
-                    ),
-                    child: GridView.builder(
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 18,
-                        mainAxisSpacing: 18,
-                        childAspectRatio: 0.75,
-                      ),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailsPage(),
-                              ),
-                            );
-                          },
-                          child: ProductCard(),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

@@ -1,11 +1,13 @@
 import 'dart:ui';
+import 'package:dev_fest_product_list/data/models/product.dart';
 import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dev_fest_product_list/ui/core/widgets/favorite_button.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  final ProductModel product;
+
+  const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +16,18 @@ class ProductCard extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              "assets/close-up-futuristic-sneakers.jpg",
-              fit: BoxFit.cover,
-            ),
+            child: product.mainImage.isNotEmpty
+                ? Image.network(product.mainImage, fit: BoxFit.cover)
+                : Center(
+                  child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.primaryDark3,
+                      ),
+                    ),
+                ),
           ),
 
           Positioned.fill(
@@ -41,7 +51,7 @@ class ProductCard extends StatelessWidget {
                 height: 32,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(color: Colors.black.withAlpha(25)),
-                child: const FavoriteButton(isFavorite: true, size: 18),
+                child: FavoriteButton(isFavorite: product.isFavorite, size: 18),
               ),
             ),
           ),
@@ -69,18 +79,22 @@ class ProductCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Tênis Futurista",
-                              maxLines: 2,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
+                            SizedBox(
+                              width: 122,
+                              child: Text(
+                                product.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                             SizedBox(height: 2),
                             Text(
-                              "199 Kz",
+                              "${product.price} Kz",
                               style: TextStyle(
                                 color: Colors.white70,
                                 fontWeight: FontWeight.w400,
