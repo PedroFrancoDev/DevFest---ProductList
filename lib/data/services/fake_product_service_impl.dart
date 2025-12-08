@@ -1,10 +1,14 @@
+import 'package:dartz/dartz.dart';
 import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/data/services/i_product_service.dart';
+import 'package:dev_fest_product_list/domain/failures/failure.dart';
 
-class FakeProductService {
-  Future<List<ProductModel>> getProducts() async {
+class FakeProductService implements IProductService {
+  @override
+  Future<Either<Failure, List<ProductModel>>> getProducts() async {
     await Future.delayed(const Duration(milliseconds: 400));
 
-    return [
+    return Right([
       ProductModel(
         id: '1',
         name: "New Balance 574",
@@ -34,7 +38,7 @@ class FakeProductService {
           "https://images.pexels.com/photos/292999/pexels-photo-292999.jpeg",
           "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg",
         ],
-        isFavorite: true,
+        isFavorite: false,
         sizes: [39, 40, 41, 42, 43, 44],
         description:
             "O Nike Air Force 1 é um ícone do streetwear, combinando robustez e estilo atemporal.",
@@ -45,8 +49,7 @@ class FakeProductService {
         id: '3',
         name: "Adidas NMD R1",
         price: 179.99,
-        mainImage:
-            "https://images.pexels.com/photos/19090/pexels-photo.jpg",
+        mainImage: "https://images.pexels.com/photos/19090/pexels-photo.jpg",
         images: [
           "https://images.pexels.com/photos/19090/pexels-photo.jpg",
           "https://images.pexels.com/photos/267202/pexels-photo-267202.jpeg",
@@ -88,7 +91,7 @@ class FakeProductService {
           "https://images.pexels.com/photos/292999/pexels-photo-292999.jpeg",
           "https://images.pexels.com/photos/1456738/pexels-photo-1456738.jpeg",
         ],
-        isFavorite: true,
+        isFavorite: false,
         sizes: [38, 39, 40, 41, 42, 44],
         description:
             "O Puma Clyde All-Pro traz leveza e suporte ideal para treinos e uso diário.",
@@ -112,7 +115,12 @@ class FakeProductService {
             "O Vans Old Skool é um clássico do skate, conhecido pela durabilidade e estilo casual.",
         rating: 4.2,
       ),
-
-    ];
+    ]);
+  }
+  
+  @override
+  Future<Either<Failure, bool>> createProduct() {
+    // TODO: implement createProduct
+    throw UnimplementedError();
   }
 }

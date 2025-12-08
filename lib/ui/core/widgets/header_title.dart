@@ -14,7 +14,7 @@ class HeaderTitle extends StatelessWidget {
     required this.title,
     this.color,
     this.istitleRigth = true,
-    this.fontSize = 13.14,
+    this.fontSize = 14.14,
     this.fontWeight = FontWeight.w400,
     this.horizontalPadding = 17.76,
     this.onTap,

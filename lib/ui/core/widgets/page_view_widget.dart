@@ -1,5 +1,6 @@
 import 'package:dev_fest_product_list/ui/favorites/view/favorite_view.dart';
 import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
+import 'package:dev_fest_product_list/ui/register_product/view/register_products.dart';
 import 'package:flutter/material.dart';
 import 'package:dev_fest_product_list/ui/Home/view/home_view.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,7 +16,7 @@ class _PageViewWidgetState extends State<PageViewWidget> {
   int _selectedIndex = 0;
   late final PageController _pageController;
 
-  final List<Widget> _pages = [HomePage(), FavoritesScreen()];
+  final List<Widget> _pages = [HomePage(), FavoritesScreen(), RegisterProducts()];
 
   @override
   void initState() {
@@ -52,9 +53,9 @@ class _PageViewWidgetState extends State<PageViewWidget> {
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           elevation: 0,
-          selectedItemColor: AppColors.primary,
+          selectedItemColor: AppColors.primaryDark3,
           unselectedItemColor: Colors.grey,
-          selectedIconTheme: const IconThemeData(color: Colors.blue),
+          selectedIconTheme: const IconThemeData(color: AppColors.primaryDark3),
           unselectedIconTheme: const IconThemeData(color: Colors.grey),
           showSelectedLabels: true,
           showUnselectedLabels: true,
@@ -76,7 +77,7 @@ class _PageViewWidgetState extends State<PageViewWidget> {
                 width: 20,
                 height: 20,
                 colorFilter: ColorFilter.mode(
-                  _selectedIndex == 0 ? AppColors.primary : Colors.grey,
+                  _selectedIndex == 0 ? AppColors.primaryDark3 : Colors.grey,
                   BlendMode.srcIn,
                 ),
               ),
@@ -88,11 +89,23 @@ class _PageViewWidgetState extends State<PageViewWidget> {
                 width: 20,
                 height: 24,
                 colorFilter: ColorFilter.mode(
-                  _selectedIndex == 1 ? AppColors.primary : Colors.grey,
+                  _selectedIndex == 1 ? AppColors.primaryDark3 : Colors.grey,
                   BlendMode.srcIn,
                 ),
               ),
               label: 'Favoritos',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/Property 1=outline.svg",
+                width: 20,
+                height: 24,
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 2 ? AppColors.primaryDark3 : Colors.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              label: 'Cadastrar',
             ),
           ],
         ),

@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       body: ListenableBuilder(
         listenable: viewModel,
         builder: (context, _) {
-          if(viewModel.isHomeLoading) {
+          if (viewModel.isHomeLoading) {
             return const Center(
               child: CircularProgressIndicator(
                 color: AppColors.primaryDark3,
@@ -58,28 +58,71 @@ class _HomePageState extends State<HomePage> {
             );
           }
 
+          // if (viewModel.products.isEmpty) {
+          //   return SizedBox(
+          //     width: double.infinity,
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         SizedBox(height: 6),
+          //         Text(
+          //           'Ops! Ocorreu um erro inesperado.',
+          //           style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+          //         ),
+          //         SizedBox(height: 10),
+          //         GestureDetector(
+          //           onTap: () => viewModel.geAllProducts(),
+          //           child: Padding(
+          //             padding: const EdgeInsets.symmetric(horizontal: 24),
+          //             child: SizedBox(
+          //               height: 54,
+          //               width: double.infinity,
+          //               child: ElevatedButton(
+          //                 style: ElevatedButton.styleFrom(
+          //                   backgroundColor: AppColors.primary,
+          //                   shape: RoundedRectangleBorder(
+          //                     borderRadius: BorderRadius.circular(18),
+          //                   ),
+          //                   padding: const EdgeInsets.symmetric(horizontal: 28),
+          //                 ),
+          //                 onPressed: () {},
+          //                 child: const Text(
+          //                   "Tentar novamente",
+          //                   style: TextStyle(
+          //                     fontSize: 17,
+          //                     fontWeight: FontWeight.bold,
+          //                     color: Colors.white,
+          //                   ),
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   );
+          // }
+
           return Column(
             children: [
               const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(child: buildTextField()),
-                  GestureDetector(
-                    onTap: () => {},
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: SvgPicture.asset(
-                        "assets/Filter.svg",
-                        width: 20,
-                        height: 20,
-                        colorFilter: ColorFilter.mode(
-                          Colors.white,
-                          BlendMode.srcIn,
-                        ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: SvgPicture.asset(
+                      "assets/Filter.svg",
+                      width: 20,
+                      height: 20,
+                      colorFilter: ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
                       ),
                     ),
                   ),
@@ -107,33 +150,54 @@ class _HomePageState extends State<HomePage> {
                           bottom: 24,
                           top: 20,
                         ),
-                        child: GridView.builder(
-                          itemCount: viewModel.products.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 18,
-                                mainAxisSpacing: 18,
-                                childAspectRatio: 0.75,
-                              ),
-                          itemBuilder: (context, index) {
-                            final product = viewModel.products[index];
+                        child: viewModel.products.isEmpty
+                            ? SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(height: 100),
+                                    Text(
+                                      'Nenhum produto encontrado.',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : GridView.builder(
+                                itemCount: viewModel.products.length,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 18,
+                                      mainAxisSpacing: 18,
+                                      childAspectRatio: 0.75,
+                                    ),
+                                itemBuilder: (context, index) {
+                                  final product = viewModel.products[index];
 
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProductDetailsPage(productId: product.id),
-                                  ),
-                                );
-                              },
-                              child: ProductCard(product: product),
-                            );
-                          },
-                        ),
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProductDetailsPage(
+                                                productId: product.id,
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                    child: ProductCard(product: product),
+                                  );
+                                },
+                              ),
                       ),
                     ],
                   ),
