@@ -123,4 +123,16 @@ class FakeProductService implements IProductService {
     // TODO: implement createProduct
     throw UnimplementedError();
   }
+  
+  @override
+  Future<Either<Failure, bool>> addToFavorites(String productId) {
+    // TODO: implement addToFavorites
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Either<Failure, bool>> removeFromFavorites(String productId) {
+    // TODO: implement removeFromFavorites
+    throw UnimplementedError();
+  }
 }

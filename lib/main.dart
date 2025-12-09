@@ -2,6 +2,7 @@ import 'package:dev_fest_product_list/config/di/injector.dart';
 import 'package:dev_fest_product_list/ui/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,9 +14,14 @@ void main() async {
   runApp(const App());
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

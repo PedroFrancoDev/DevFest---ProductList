@@ -6,8 +6,15 @@ import 'package:dev_fest_product_list/ui/core/widgets/favorite_button.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
+  final bool favoriteActionEnabled;
+  final Function(bool value) removeOrAddProductToFavorites;
 
-  const ProductCard({super.key, required this.product});
+  const ProductCard({
+    super.key,
+    required this.product,
+    required this.removeOrAddProductToFavorites,
+    this.favoriteActionEnabled = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +26,7 @@ class ProductCard extends StatelessWidget {
             child: product.mainImage.isNotEmpty
                 ? Image.network(product.mainImage, fit: BoxFit.cover)
                 : Center(
-                  child: SizedBox(
+                    child: SizedBox(
                       width: 24,
                       height: 24,
                       child: CircularProgressIndicator(
@@ -27,7 +34,7 @@ class ProductCard extends StatelessWidget {
                         color: AppColors.primaryDark3,
                       ),
                     ),
-                ),
+                  ),
           ),
 
           Positioned.fill(
@@ -51,7 +58,12 @@ class ProductCard extends StatelessWidget {
                 height: 32,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(color: Colors.black.withAlpha(25)),
-                child: FavoriteButton(isFavorite: product.isFavorite, size: 18),
+                child: FavoriteButton(
+                  favoriteActionEnabled: favoriteActionEnabled,
+                  onChanged: (value) => removeOrAddProductToFavorites(value),
+                  isFavorite: product.isFavorite,
+                  size: 18,
+                ),
               ),
             ),
           ),

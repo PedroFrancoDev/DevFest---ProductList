@@ -97,7 +97,7 @@ class _PageViewWidgetState extends State<PageViewWidget> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                "assets/Property 1=outline.svg",
+                "assets/register.svg",
                 width: 20,
                 height: 24,
                 colorFilter: ColorFilter.mode(

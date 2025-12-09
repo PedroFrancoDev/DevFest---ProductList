@@ -194,7 +194,16 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       );
                                     },
-                                    child: ProductCard(product: product),
+                                    child: ProductCard(
+                                      product: product,
+                                      removeOrAddProductToFavorites: (value) =>
+                                          viewModel
+                                              .removeOrAddProductToFavorites(
+                                                context: context,
+                                                productId: product.id,
+                                                isFavorite: value,
+                                              ),
+                                    ),
                                   );
                                 },
                               ),

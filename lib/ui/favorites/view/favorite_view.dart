@@ -117,7 +117,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         ),
                       );
                     },
-                    child: ProductCard(product: favoriteProduct),
+                    child: ProductCard(
+                      product: favoriteProduct,
+                      removeOrAddProductToFavorites: (value) =>
+                          viewModel.removeProductToFavorites(
+                            context: context,
+                            productId: favoriteProduct.id,
+                          ),
+                    ),
                   );
                 },
               ),

@@ -3,6 +3,7 @@ import 'package:dev_fest_product_list/data/repository/i_product_repository.dart'
 import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:dev_fest_product_list/ui/core/widgets/app_bar.dart';
 import 'package:dev_fest_product_list/ui/register_product/view_model/home_view_model.dart';
+import 'package:dev_fest_product_list/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,7 +16,7 @@ class RegisterProducts extends StatefulWidget {
 
 class _RegisterProductsState extends State<RegisterProducts> {
   final viewModel = RegisterProductsViewModel(
-    productRepository: getIt.get<IProductRepository>()
+    productRepository: getIt.get<IProductRepository>(),
   );
 
   @override
@@ -34,39 +35,46 @@ class _RegisterProductsState extends State<RegisterProducts> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: SizedBox(
-            height: 54,
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 28),
-              ),
-              onPressed: () => viewModel.createProduct(),
-              child: viewModel.isLoading ? SizedBox(
-                width: 25,
-                height: 25,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: Colors.white,
-                ),
-              ) : Text(
-                "Tentar novamente",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+      body: ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, _) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SizedBox(
+                height: 54,
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 28),
+                  ),
+                  onPressed: () => viewModel.createProduct(context),
+                  child: viewModel.isLoading
+                      ? SizedBox(
+                          width: 25,
+                          height: 25,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(
+                          "Tentar novamente",
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
