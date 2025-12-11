@@ -1,4 +1,3 @@
-
 import 'package:dev_fest_product_list/ui/core/widgets/page_view_widget.dart';
 import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const PageViewWidget(),
-        ),
+        MaterialPageRoute(builder: (context) => const PageViewWidget()),
       );
     });
   }
@@ -29,7 +26,12 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: Center(
-        child: Image.asset("assets/tênis.png", width: 800,),
+        child: Image.asset(
+          "assets/FUNDO.png",
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.width * 0.9,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

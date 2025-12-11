@@ -11,37 +11,108 @@ class FirebaseProductServiceImpl extends IProductService {
   final List<ProductModel> products = [
     ProductModel(
       id: '1',
-      name: "Tênis Esportivo Azul e Branco",
-      price: 199.99,
+      name: "New Balance 574",
+      price: 149.99,
       mainImage:
-          "https://images.pexels.com/photos/20370415/pexels-photo-20370415/free-photo-of-tenis-esportivo-azul-e-branco-em-fundo-branco.jpeg",
+          "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg",
       images: [
-        "https://images.pexels.com/photos/20370415/pexels-photo-20370415/free-photo-of-tenis-esportivo-azul-e-branco-em-fundo-branco.jpeg",
-        "https://images.pexels.com/photos/20370418/pexels-photo-20370418/free-photo-of-tenis-nike-pegasus-lateral-direita-em-fundo-branco.jpeg",
-        "https://images.pexels.com/photos/20370421/pexels-photo-20370421/free-photo-of-tenis-nike-vista-superior-em-fundo-branco.jpeg",
-        "https://images.pexels.com/photos/20370424/pexels-photo-20370424/free-photo-of-sola-de-tenis-nike-em-fundo-branco.jpeg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg",
+        "https://images.pexels.com/photos/19090/pexels-photo.jpg",
+        "https://images.pexels.com/photos/267202/pexels-photo-267202.jpeg",
       ],
       isFavorite: false,
       sizes: [38, 39, 40, 41, 42],
-      description: "Tênis desportivo com bom amortecimento e estilo casual.",
-      rating: 4.5,
+      description:
+          "O New Balance 574 traz um design clássico com foco em estabilidade e conforto diário.",
+      rating: 4.6,
     ),
 
     ProductModel(
       id: '2',
-      name: "Tênis Branco Clean",
-      price: 179.99,
+      name: "Nike Air Force 1",
+      price: 169.99,
       mainImage:
-          "https://images.pexels.com/photos/89155/free-white-sneakers-on-white-background-89155.jpeg",
+          "https://images.pexels.com/photos/1456738/pexels-photo-1456738.jpeg",
       images: [
-        "https://images.pexels.com/photos/89155/free-white-sneakers-on-white-background-89155.jpeg",
+        "https://images.pexels.com/photos/1456738/pexels-photo-1456738.jpeg",
+        "https://images.pexels.com/photos/292999/pexels-photo-292999.jpeg",
         "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg",
-        "https://images.pexels.com/photos/34400923/pexels-photo-34400923.jpeg",
-        "https://images.pexels.com/photos/1124466/pexels-photo-1124466.jpeg",
       ],
       isFavorite: false,
-      sizes: [38, 39, 40, 41, 42, 43],
-      description: "Sneakers brancos minimalistas, versáteis para dia a dia.",
+      sizes: [39, 40, 41, 42, 43, 44],
+      description:
+          "O Nike Air Force 1 é um ícone do streetwear, combinando robustez e estilo atemporal.",
+      rating: 4.8,
+    ),
+
+    ProductModel(
+      id: '3',
+      name: "Adidas NMD R1",
+      price: 179.99,
+      mainImage: "https://images.pexels.com/photos/19090/pexels-photo.jpg",
+      images: [
+        "https://images.pexels.com/photos/19090/pexels-photo.jpg",
+        "https://images.pexels.com/photos/267202/pexels-photo-267202.jpeg",
+        "https://images.pexels.com/photos/292999/pexels-photo-292999.jpeg",
+      ],
+      isFavorite: false,
+      sizes: [38, 39, 40, 41, 42],
+      description:
+          "O Adidas NMD R1 combina conforto extremo com visual minimalista moderno.",
+      rating: 4.4,
+    ),
+
+    ProductModel(
+      id: '4',
+      name: "Asics Gel-Kayano 30",
+      price: 199.99,
+      mainImage:
+          "https://images.pexels.com/photos/292999/pexels-photo-292999.jpeg",
+      images: [
+        "https://images.pexels.com/photos/292999/pexels-photo-292999.jpeg",
+        "https://images.pexels.com/photos/19090/pexels-photo.jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg",
+      ],
+      isFavorite: false,
+      sizes: [40, 41, 42, 43, 44],
+      description:
+          "O Gel-Kayano 30 oferece estabilidade premium e tecnologia avançada para corridas longas.",
+      rating: 4.9,
+    ),
+
+    ProductModel(
+      id: '5',
+      name: "Puma Clyde All-Pro",
+      price: 139.99,
+      mainImage:
+          "https://images.pexels.com/photos/267202/pexels-photo-267202.jpeg",
+      images: [
+        "https://images.pexels.com/photos/267202/pexels-photo-267202.jpeg",
+        "https://images.pexels.com/photos/292999/pexels-photo-292999.jpeg",
+        "https://images.pexels.com/photos/1456738/pexels-photo-1456738.jpeg",
+      ],
+      isFavorite: false,
+      sizes: [38, 39, 40, 41, 42, 44],
+      description:
+          "O Puma Clyde All-Pro traz leveza e suporte ideal para treinos e uso diário.",
+      rating: 4.3,
+    ),
+
+    ProductModel(
+      id: '6',
+      name: "Vans Old Skool",
+      price: 119.99,
+      mainImage:
+          "https://images.pexels.com/photos/1456738/pexels-photo-1456738.jpeg",
+      images: [
+        "https://images.pexels.com/photos/1456738/pexels-photo-1456738.jpeg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg",
+        "https://images.pexels.com/photos/267202/pexels-photo-267202.jpeg",
+      ],
+      isFavorite: false,
+      sizes: [37, 38, 39, 40, 41, 42],
+      description:
+          "O Vans Old Skool é um clássico do skate, conhecido pela durabilidade e estilo casual.",
       rating: 4.2,
     ),
   ];

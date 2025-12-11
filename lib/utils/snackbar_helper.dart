@@ -35,7 +35,7 @@ class SnackbarHelper {
           child: Material(
             color: Colors.transparent,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(16),
