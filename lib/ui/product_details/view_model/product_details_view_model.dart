@@ -36,8 +36,6 @@ class ProductDetailsViewModel extends ChangeNotifier {
         product = r;
         isProductDetailsLoading = false;
         notifyListeners();
-
-        print(product);
       },
     );
   }

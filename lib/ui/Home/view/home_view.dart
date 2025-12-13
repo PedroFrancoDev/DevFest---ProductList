@@ -1,4 +1,5 @@
 import 'package:dev_fest_product_list/config/di/injector.dart';
+import 'package:dev_fest_product_list/data/repository/i_banner_repository.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/carousel_page.dart';
 import 'package:dev_fest_product_list/ui/Home/view_model/home_view_model.dart';
@@ -21,13 +22,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final HomeViewModel viewModel = HomeViewModel(
     productRepository: getIt<IProductRepository>(),
+    iBannerRepository: getIt<IBannerRepository>(),
   );
 
   @override
   void initState() {
     super.initState();
 
-    viewModel.geAllProducts();
+    viewModel.initHomeState();
   }
 
   @override
@@ -136,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const SizedBox(height: 8),
 
-                      const Carousel(),
+                      Carousel(),
                       const SizedBox(height: 24),
                       HeaderTitle(
                         title: "Produtos em Alta",

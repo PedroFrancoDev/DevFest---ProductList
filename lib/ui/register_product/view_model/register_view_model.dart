@@ -1,14 +1,40 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
+import 'package:dev_fest_product_list/data/models/banner.dart';
 import 'package:dev_fest_product_list/data/models/product.dart';
-import 'package:dev_fest_product_list/data/services/i_product_service.dart';
-import 'package:dev_fest_product_list/domain/failures/failure.dart';
-import 'package:dev_fest_product_list/utils/firebase_error_messages.dart';
+import 'package:dev_fest_product_list/data/repository/i_banner_repository.dart';
+import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
+import 'package:dev_fest_product_list/ui/core/global/base_view_model.dart';
+import 'package:flutter/material.dart';
 
-class FirebaseProductServiceImpl extends IProductService {
-  final db = FirebaseFirestore.instance;
+class RegisterProductsViewModel extends BaseViewModel {
+  final IProductRepository _productRepository;
+  final IBannerRepository _bannerRepository;
 
-  final List<ProductModel> products = [
+  RegisterProductsViewModel({
+    required IProductRepository productRepository,
+    required IBannerRepository bannerRepository,
+  }) : _productRepository = productRepository,
+       _bannerRepository = bannerRepository;
+
+  bool isCreatingProducts = false;
+  bool isAddingBanners = false;
+
+  final List<BannerModel> _bannerImages = [
+    BannerModel(
+      imageUrl:
+          "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-oFzwfJ37fgs.webp",
+    ),
+    BannerModel(
+      imageUrl:
+          "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-uKpbE7SijX0.webp",
+    ),
+    BannerModel(
+      imageUrl:
+          "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-wVNjmpBMzos.jpg",
+    ),
+    BannerModel(imageUrl: "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-ma4cN7fRNuk.webp"),
+  ];
+
+  final List<ProductModel> _products = [
     ProductModel(
       id: '1',
       name: "New Balance 574",
@@ -117,68 +143,21 @@ class FirebaseProductServiceImpl extends IProductService {
     ),
   ];
 
-  @override
-  Future<Either<Failure, List<ProductModel>>> getProducts() async {
-    try {
-      final snapshot = await db.collection("products").get();
-
-      final produts = snapshot.docs
-          .map((doc) => ProductModel.fromJson(doc.data()))
-          .toList();
-
-      return Right(produts);
-    } on FirebaseException catch (e) {
-      return Left(Failure(message: FirebaseErrorMessages.fromException(e)));
-    }
+  void createProduct(BuildContext context) async {
+    handleRequestWithLoading(
+      setLoading: (value) => isCreatingProducts = value,
+      context: context,
+      operation: () => _productRepository.createProductList(_products),
+      successMessage: "Produtos adicionados com sucesso!",
+    );
   }
 
-  @override
-  Future<Either<Failure, bool>> createProduct() async {
-    if (products.isEmpty) {
-      return Left(Failure(message: "Nenhum produto para criar"));
-    }
-
-    try {
-      final batch = db.batch();
-
-      for (var product in products) {
-        final docRef = db.collection('products').doc();
-        final productWithId = product.copyWith(id: docRef.id);
-
-        batch.set(docRef, productWithId.toJson());
-      }
-
-      await batch.commit();
-
-      return Right(true);
-    } on FirebaseException catch (e) {
-      return Left(Failure(message: FirebaseErrorMessages.fromException(e)));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> addToFavorites(String productId) async {
-    try {
-      await db.collection("products").doc(productId).update({
-        "isFavorite": true,
-      });
-
-      return Right(true);
-    } on FirebaseException catch (e) {
-      return Left(Failure(message: FirebaseErrorMessages.fromException(e)));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> removeFromFavorites(String productId) async {
-    try {
-      await db.collection("products").doc(productId).update({
-        "isFavorite": false,
-      });
-
-      return Right(true);
-    } on FirebaseException catch (e) {
-      return Left(Failure(message: FirebaseErrorMessages.fromException(e)));
-    }
+  void addBannerImages(BuildContext context) async {
+    handleRequestWithLoading(
+      setLoading: (value) => isAddingBanners = value,
+      context: context,
+      operation: () => _bannerRepository.addBannerImages(_bannerImages),
+      successMessage: "Imagens do banner adicionadas com sucesso!",
+    );
   }
 }

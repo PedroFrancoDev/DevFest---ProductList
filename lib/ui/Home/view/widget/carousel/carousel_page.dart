@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/images_list.dart';
+import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/imagens.dart';
 import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 

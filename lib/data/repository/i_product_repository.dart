@@ -7,5 +7,5 @@ abstract class IProductRepository {
   Future<Either<Failure, ProductModel>> getProductById(String id);
   Future<Either<Failure, bool>> addToFavorites(String productId);
   Future<Either<Failure, bool>> removeFromFavorites(String productId);
-  Future<Either<Failure, bool>> createProduct();
+  Future<Either<Failure, bool>> createProductList(List<ProductModel> products);
 }

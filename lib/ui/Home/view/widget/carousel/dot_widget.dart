@@ -1,4 +1,4 @@
-import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/images_list.dart';
+import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/imagens.dart';
 import 'package:flutter/material.dart';
 
 class DotWidget extends StatelessWidget {

@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:dev_fest_product_list/data/models/banner.dart';
 import 'package:dev_fest_product_list/data/models/product.dart';
 import 'package:dev_fest_product_list/data/services/i_product_service.dart';
 import 'package:dev_fest_product_list/domain/failures/failure.dart';
 
-class FakeProductService implements IProductService {
+class FakeProductService implements IFirebaseService {
   @override
   Future<Either<Failure, List<ProductModel>>> getProducts() async {
     await Future.delayed(const Duration(milliseconds: 400));
@@ -119,7 +120,7 @@ class FakeProductService implements IProductService {
   }
   
   @override
-  Future<Either<Failure, bool>> createProduct() {
+  Future<Either<Failure, bool>> createProductList(List<ProductModel> products) {
     // TODO: implement createProduct
     throw UnimplementedError();
   }
@@ -133,6 +134,19 @@ class FakeProductService implements IProductService {
   @override
   Future<Either<Failure, bool>> removeFromFavorites(String productId) {
     // TODO: implement removeFromFavorites
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Either<Failure, bool>> addBannerImages(
+    List<BannerModel> bannerImages) {
+    // TODO: implement addBannerImages
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Either<Failure, List<BannerModel>>> getBannerImages() {
+    // TODO: implement getBannerImages
     throw UnimplementedError();
   }
 }

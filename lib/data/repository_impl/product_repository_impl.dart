@@ -7,20 +7,13 @@ import 'package:dev_fest_product_list/domain/failures/failure.dart';
 import 'package:dev_fest_product_list/utils/firebase_error_messages.dart';
 
 class ProductRepositoryImpl implements IProductRepository {
-  final IProductService productService;
+  final IFirebaseService firebaseService;
 
-  ProductRepositoryImpl({required this.productService});
-
-  @override
-  Future<Either<Failure, List<ProductModel>>> geAllProducts() async {
-    final products = await productService.getProducts();
-
-    return Future.value(products);
-  }
+  ProductRepositoryImpl({required this.firebaseService});
 
   @override
   Future<Either<Failure, ProductModel>> getProductById(String id) async {
-    final products = await productService.getProducts();
+    final products = await firebaseService.getProducts();
 
     try {
       final product = products.fold(
@@ -38,7 +31,7 @@ class ProductRepositoryImpl implements IProductRepository {
   @override
   Future<Either<Failure, bool>> addToFavorites(String productId) async {
     try {
-      productService.addToFavorites(productId);
+      firebaseService.addToFavorites(productId);
       return Right(true);
     } on FirebaseException catch (e) {
       return Left(Failure(message: FirebaseErrorMessages.fromException(e)));
@@ -48,7 +41,7 @@ class ProductRepositoryImpl implements IProductRepository {
   @override
   Future<Either<Failure, bool>> removeFromFavorites(String productId) async {
     try {
-      productService.removeFromFavorites(productId);
+      firebaseService.removeFromFavorites(productId);
       return Right(true);
     } on FirebaseException catch (e) {
       return Left(Failure(message: FirebaseErrorMessages.fromException(e)));
@@ -56,11 +49,20 @@ class ProductRepositoryImpl implements IProductRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> createProduct() async {
-    final result = await productService.createProduct();
+  Future<Either<Failure, bool>> createProductList(
+    List<ProductModel> products,
+  ) async {
+    final result = await firebaseService.createProductList(products);
 
     result.fold((l) => Left(l), (r) => Right(r));
 
     return Future.value(result);
+  }
+
+  @override
+  Future<Either<Failure, List<ProductModel>>> geAllProducts() async {
+    final products = await firebaseService.getProducts();
+
+    return Future.value(products);
   }
 }
