@@ -20,24 +20,24 @@ class HomeViewModel extends ChangeNotifier {
 
   bool isHomeLoading = false;
 
-  void initHomeState() {
+  void geAllProducts() async {
     isHomeLoading = true;
     notifyListeners();
 
-    geAllProducts();
-    // getAllBannerImages();
-
-    isHomeLoading = false;
-    notifyListeners();
-  }
-
-  void geAllProducts() async {
     final result = await _productRepository.geAllProducts();
 
-    result.fold((_) {}, (r) {
-      products.clear();
-      products.addAll(r);
-    });
+    result.fold(
+      (_) {
+        isHomeLoading = false;
+        notifyListeners();
+      },
+      (r) {
+        products.clear();
+        products.addAll(r);
+        isHomeLoading = false;
+        notifyListeners();
+      },
+    );
   }
 
   void getAllBannerImages() async {
