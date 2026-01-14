@@ -50,19 +50,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC1FdRUAIHXSyvaZ-IxcAJOSchEvqM4gSA',
-    appId: '1:205409768420:android:ebc474ee7e83162c75edf1',
-    messagingSenderId: '205409768420',
-    projectId: 'livraria-com-firebase',
-    storageBucket: 'livraria-com-firebase.firebasestorage.app',
+    apiKey: 'AIzaSyD3XL5liPBqLjVQAtqTGVDy00-RoExrHJE',
+    appId: '1:72168125518:android:63c415b80e3c0f3849bf1f',
+    messagingSenderId: '72168125518',
+    projectId: 'devfest-product-list',
+    databaseURL: 'https://devfest-product-list-default-rtdb.firebaseio.com',
+    storageBucket: 'devfest-product-list.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCr2iOtiZOu7b1vEMAKWI41yDk0m_PLsvY',
-    appId: '1:205409768420:ios:e4452e5e043c0c9e75edf1',
-    messagingSenderId: '205409768420',
-    projectId: 'livraria-com-firebase',
-    storageBucket: 'livraria-com-firebase.firebasestorage.app',
+    apiKey: 'AIzaSyCkt5Q2CfVJaD_lehugNGj4azr8soRLjiE',
+    appId: '1:72168125518:ios:249427b6d20dd2e749bf1f',
+    messagingSenderId: '72168125518',
+    projectId: 'devfest-product-list',
+    databaseURL: 'https://devfest-product-list-default-rtdb.firebaseio.com',
+    storageBucket: 'devfest-product-list.firebasestorage.app',
     iosBundleId: 'flutterchallengeapp.devFestProductlList',
   );
+
 }
