@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "72168125518",
+    "firebase_url": "https://devfest-product-list-default-rtdb.firebaseio.com",
+    "project_id": "devfest-product-list",
+    "storage_bucket": "devfest-product-list.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72168125518:android:63c415b80e3c0f3849bf1f",
+        "android_client_info": {
+          "package_name": "flutter_challenge_app.dev_fest_productl_list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3XL5liPBqLjVQAtqTGVDy00-RoExrHJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
