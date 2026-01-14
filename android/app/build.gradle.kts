@@ -8,6 +8,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+dependencies {
+  implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+}
+
 android {
     namespace = "flutter_challenge_app.dev_fest_productl_list"
     compileSdk = flutter.compileSdkVersion

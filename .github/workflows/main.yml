@@ -1,0 +1,44 @@
+name: Deploy para Firebase App Distribution
+
+on:
+  push:
+    branches:
+      - main # O processo rodará sempre que você der push na branch main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o código do repositório
+      - uses: actions/checkout@v3
+
+      # 2. Instala o Java (necessário para Android)
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # 3. Instala o Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.5' # Ou a versão que você usa
+          channel: 'stable'
+
+      # 4. Baixa as dependências do seu app
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # 5. Gera o APK (Build)
+      - name: Build APK
+        run: flutter build apk --release
+
+      # 6. Envia para o Firebase App Distribution
+      - name: upload artifact to Firebase App Distribution
+        uses: w9jds/firebase-action@master
+        with:
+          args: appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app ${{ secrets.FIREBASE_APP_ID }} --groups "testers"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
