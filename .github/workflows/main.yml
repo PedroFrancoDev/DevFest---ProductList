@@ -31,6 +31,24 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
+        # Instala o Firebase CLI na máquina do GitHub
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      # Instala o FlutterFire CLI
+      - name: Install FlutterFire CLI
+        run: dart pub global activate flutterfire_cli
+
+      # Gera o firebase_options.dart automaticamente antes do build
+      - name: Configure Firebase
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          flutterfire configure \
+            --yes \
+            --project=${{ secrets.FIREBASE_PROJECT_ID }} \
+            --platforms=android \
+            --android-package-name=com.seu.pacote.app
+
       # 5. Gera o APK (Build)
       - name: Build APK
         run: flutter build apk --release
