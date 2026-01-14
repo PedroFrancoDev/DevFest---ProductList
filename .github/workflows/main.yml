@@ -39,7 +39,7 @@ jobs:
       - name: Install FlutterFire CLI
         run: dart pub global activate flutterfire_cli
 
-      # Gera o firebase_options.dart automaticamente antes do build
+     # Gera o firebase_options.dart automaticamente antes do build
       - name: Configure Firebase
         run: |
           export PATH="$PATH":"$HOME/.pub-cache/bin"
@@ -47,7 +47,8 @@ jobs:
             --yes \
             --project=${{ secrets.FIREBASE_PROJECT_ID }} \
             --platforms=android \
-            --android-package-name=com.seu.pacote.app
+            --android-package-name=com.seu.pacote.app \
+            --token=${{ secrets.FIREBASE_TOKEN }}
 
       # 5. Gera o APK (Build)
       - name: Build APK
