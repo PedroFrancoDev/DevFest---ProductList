@@ -1,0 +1,35 @@
+# workflows:
+#   android-firebase-deploy:
+#     name: Deploy para Firebase App Distribution
+#     instance_type: mac_mini_m1 # Ou linux se preferir, mas Mac é padrão para Flutter
+#     max_build_duration: 60
+#     environment:
+#       flutter: 3.10.0 # Ajuste para a versão desejada
+#       groups:
+#         - firebase_credentials # Nome do grupo de variáveis no painel do Codemagic
+#       vars:
+#         FIREBASE_APP_ID: "SEU_APP_ID_AQUI"
+#     triggering:
+#       events:
+#         - push
+#       branch_filter:
+#         - include: main
+#     scripts:
+#       - name: Get dependencies
+#         script: flutter pub get
+#       - name: Build APK
+#         script: flutter build apk --release --build-number=$BUILD_NUMBER
+#     publishing:
+#       firebase:
+#         # No Codemagic, em vez de TOKEN, usamos o arquivo JSON da Service Account
+#         firebase_service_account_credentials: $FIREBASE_SERVICE_ACCOUNT_JSON
+#         android:
+#           app_id: $FIREBASE_APP_ID
+#           groups:
+#             - testers
+
+workflows:
+  hello-world:
+    name: Executa o Famoso olá mundo.
+    scripts:
+      - echo "Hello World! (Pedro Franco Pedro)"
