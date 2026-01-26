@@ -1,5 +1,5 @@
-import 'package:dev_fest_product_list/data/models/banner.dart';
-import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/data/models/entities/banner/banner_entity.dart';
+import 'package:dev_fest_product_list/data/models/entities/product/product_entity.dart';
 import 'package:dev_fest_product_list/data/repository/i_banner_repository.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/utils/snackbar_helper.dart';
@@ -15,8 +15,8 @@ class HomeViewModel extends ChangeNotifier {
   }) : _productRepository = productRepository,
        _iBannerRepository = iBannerRepository;
 
-  final List<ProductModel> products = [];
-  final List<BannerModel> bannerImages = [];
+  final List<ProductEntity> products = [];
+  final List<BannerEntity> bannerImages = [];
 
   bool isHomeLoading = false;
 
@@ -27,13 +27,13 @@ class HomeViewModel extends ChangeNotifier {
     final result = await _productRepository.geAllProducts();
 
     result.fold(
-      (_) {
+      (failure) {
         isHomeLoading = false;
         notifyListeners();
       },
-      (r) {
+      (productsResponse) {
         products.clear();
-        products.addAll(r);
+        products.addAll(productsResponse.map((e) => e.toEntity()));
         isHomeLoading = false;
         notifyListeners();
       },
@@ -45,7 +45,7 @@ class HomeViewModel extends ChangeNotifier {
 
     result.fold((_) {}, (r) {
       products.clear();
-      bannerImages.addAll(r);
+      bannerImages.addAll(r.map((e) => e.toEntity()));
     });
   }
 
@@ -64,7 +64,7 @@ class HomeViewModel extends ChangeNotifier {
         failure.message,
         type: MessageType.error,
       ),
-      (success) {
+      (favoriteProductResponse) {
         return;
       },
     );

@@ -1,4 +1,4 @@
-import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/data/models/entities/product/product_entity.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +7,7 @@ class ProductDetailsViewModel extends ChangeNotifier {
 
   ProductDetailsViewModel({required IProductRepository productRepository})
     : _productRepository = productRepository;
-  ProductModel product = ProductModel(
+  ProductEntity product = ProductEntity(
     id: '',
     name: '',
     price: 0.0,
@@ -21,7 +21,7 @@ class ProductDetailsViewModel extends ChangeNotifier {
 
   bool isProductDetailsLoading = false;
 
-  void fetchProductDetails(String productId) async {
+  Future<void> fetchProductDetails(String productId) async {
     isProductDetailsLoading = true;
     notifyListeners();
 
@@ -33,7 +33,7 @@ class ProductDetailsViewModel extends ChangeNotifier {
         notifyListeners();
       },
       (r) {
-        product = r;
+        product = r.toEntity();
         isProductDetailsLoading = false;
         notifyListeners();
       },

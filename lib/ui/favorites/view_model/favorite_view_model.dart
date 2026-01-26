@@ -1,4 +1,4 @@
-import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/data/models/entities/product/product_entity.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ class FavoriteViewModel extends ChangeNotifier {
   FavoriteViewModel({required IProductRepository productRepository})
     : _productRepository = productRepository;
 
-  final List<ProductModel> favoriteProducts = [];
+  final List<ProductEntity> favoriteProducts = [];
   bool isFavoriteViewLoading = false;
 
   void getFavoriteProducts() async {
@@ -19,14 +19,16 @@ class FavoriteViewModel extends ChangeNotifier {
     final result = await _productRepository.geAllProducts();
 
     result.fold(
-      (l) {
+      (failure) {
         isFavoriteViewLoading = false;
         notifyListeners();
       },
-      (r) {
+      (favoriteProductsResponse) {
         favoriteProducts.clear();
 
-        favoriteProducts.addAll(r.where((e) => e.isFavorite));
+        favoriteProducts.addAll(
+          favoriteProductsResponse.where((e) => e.isFavorite).map((e) => e.toEntity()),
+        );
 
         isFavoriteViewLoading = false;
         notifyListeners();

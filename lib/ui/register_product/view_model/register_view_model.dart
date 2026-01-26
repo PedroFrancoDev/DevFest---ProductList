@@ -1,5 +1,5 @@
-import 'package:dev_fest_product_list/data/models/banner.dart';
-import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/data/models/dto/banner/banner_dto.dart';
+import 'package:dev_fest_product_list/data/models/dto/product/product_dto.dart';
 import 'package:dev_fest_product_list/data/repository/i_banner_repository.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/ui/core/global/base_view_model.dart';
@@ -18,24 +18,31 @@ class RegisterProductsViewModel extends BaseViewModel {
   bool isCreatingProducts = false;
   bool isAddingBanners = false;
 
-  final List<BannerModel> _bannerImages = [
-    BannerModel(
-      imageUrl:
+  final List<BannerDto> _bannerImages = [
+    BannerDto(
+      imageUrls:[
           "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-oFzwfJ37fgs.webp",
+      ]
     ),
-    BannerModel(
-      imageUrl:
+    BannerDto(
+      imageUrls:[
           "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-uKpbE7SijX0.webp",
+      ]
     ),
-    BannerModel(
-      imageUrl:
+    BannerDto(
+      imageUrls:[
           "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-wVNjmpBMzos.jpg",
+      ]
     ),
-    BannerModel(imageUrl: "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-ma4cN7fRNuk.webp"),
+    BannerDto(
+      imageUrls:[
+          "https://raw.githubusercontent.com/PedroFrancoDev/DevFest---ProductList/refs/heads/main/assets/banner/1600w-ma4cN7fRNuk.webp",
+      ]
+    ),
   ];
 
-  final List<ProductModel> _products = [
-    ProductModel(
+  final List<ProductDto> _products = [
+    ProductDto(
       id: '1',
       name: "New Balance 574",
       price: 149.99,
@@ -53,7 +60,7 @@ class RegisterProductsViewModel extends BaseViewModel {
       rating: 4.6,
     ),
 
-    ProductModel(
+    ProductDto(
       id: '2',
       name: "Nike Air Force 1",
       price: 169.99,
@@ -71,7 +78,7 @@ class RegisterProductsViewModel extends BaseViewModel {
       rating: 4.8,
     ),
 
-    ProductModel(
+    ProductDto(
       id: '3',
       name: "Adidas NMD R1",
       price: 179.99,
@@ -88,7 +95,7 @@ class RegisterProductsViewModel extends BaseViewModel {
       rating: 4.4,
     ),
 
-    ProductModel(
+    ProductDto(
       id: '4',
       name: "Asics Gel-Kayano 30",
       price: 199.99,
@@ -106,7 +113,7 @@ class RegisterProductsViewModel extends BaseViewModel {
       rating: 4.9,
     ),
 
-    ProductModel(
+    ProductDto(
       id: '5',
       name: "Puma Clyde All-Pro",
       price: 139.99,
@@ -124,7 +131,7 @@ class RegisterProductsViewModel extends BaseViewModel {
       rating: 4.3,
     ),
 
-    ProductModel(
+    ProductDto(
       id: '6',
       name: "Vans Old Skool",
       price: 119.99,

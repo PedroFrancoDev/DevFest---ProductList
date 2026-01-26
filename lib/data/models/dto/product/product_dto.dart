@@ -1,4 +1,6 @@
-class ProductModel {
+import 'package:dev_fest_product_list/data/models/entities/product/product_entity.dart';
+
+class ProductDto {
   final String id;
   final String name;
   final double price;
@@ -9,7 +11,7 @@ class ProductModel {
   final String description;
   final double rating;
 
-  ProductModel({
+  ProductDto({
     required this.id,
     required this.name,
     required this.price,
@@ -21,8 +23,8 @@ class ProductModel {
     required this.rating,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
+  factory ProductDto.fromJson(Map<String, dynamic> json) {
+    return ProductDto(
       id: json['id'] as String,
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
@@ -49,7 +51,7 @@ class ProductModel {
     };
   }
 
-  ProductModel copyWith({
+  ProductDto copyWith({
     String? id,
     String? name,
     double? price,
@@ -60,7 +62,7 @@ class ProductModel {
     String? description,
     double? rating,
   }) {
-    return ProductModel(
+    return ProductDto(
       id: id ?? this.id,
       name: name ?? this.name,
       price: price ?? this.price,
@@ -70,6 +72,20 @@ class ProductModel {
       sizes: sizes ?? this.sizes,
       description: description ?? this.description,
       rating: rating ?? this.rating,
+    );
+  }
+
+  ProductEntity toEntity() {
+    return ProductEntity(
+      id: id,
+      name: name,
+      price: price,
+      mainImage: mainImage,
+      images: images,
+      isFavorite: isFavorite,
+      sizes: sizes,
+      description: description,
+      rating: rating,
     );
   }
 }

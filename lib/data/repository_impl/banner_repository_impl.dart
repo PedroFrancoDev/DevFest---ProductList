@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dev_fest_product_list/data/models/banner.dart';
+import 'package:dev_fest_product_list/data/models/dto/banner/banner_dto.dart';
 import 'package:dev_fest_product_list/data/repository/i_banner_repository.dart';
 import 'package:dev_fest_product_list/data/services/i_product_service.dart';
 import 'package:dev_fest_product_list/domain/failures/failure.dart';
@@ -10,7 +10,7 @@ class BannerRepositoryImpl implements IBannerRepository {
   BannerRepositoryImpl({required this.firebaseService});
 
   @override
-  Future<Either<Failure, List<BannerModel>>> getBannerImages() async {
+  Future<Either<Failure, List<BannerDto>>> getBannerImages() async {
     final bannerImages = await firebaseService.getBannerImages();
 
     return Future.value(bannerImages);
@@ -18,7 +18,7 @@ class BannerRepositoryImpl implements IBannerRepository {
 
   @override
   Future<Either<Failure, bool>> addBannerImages(
-    List<BannerModel> bannerImages,
+    List<BannerDto> bannerImages,
   ) async {
     final result = await firebaseService.addBannerImages(bannerImages);
 

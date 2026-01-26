@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/data/models/dto/product/product_dto.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/data/services/i_product_service.dart';
 import 'package:dev_fest_product_list/domain/failures/failure.dart';
@@ -12,7 +12,7 @@ class ProductRepositoryImpl implements IProductRepository {
   ProductRepositoryImpl({required this.firebaseService});
 
   @override
-  Future<Either<Failure, ProductModel>> getProductById(String id) async {
+  Future<Either<Failure, ProductDto>> getProductById(String id) async {
     final products = await firebaseService.getProducts();
 
     try {
@@ -22,7 +22,7 @@ class ProductRepositoryImpl implements IProductRepository {
       );
       return product is Failure
           ? Left(product)
-          : Right(product as ProductModel);
+          : Right(product as ProductDto);
     } on FirebaseException catch (e) {
       return Left(Failure(message: FirebaseErrorMessages.fromException(e)));
     }
@@ -50,7 +50,7 @@ class ProductRepositoryImpl implements IProductRepository {
 
   @override
   Future<Either<Failure, bool>> createProductList(
-    List<ProductModel> products,
+    List<ProductDto> products,
   ) async {
     final result = await firebaseService.createProductList(products);
 
@@ -60,7 +60,7 @@ class ProductRepositoryImpl implements IProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<ProductModel>>> geAllProducts() async {
+  Future<Either<Failure, List<ProductDto>>> geAllProducts() async {
     final products = await firebaseService.getProducts();
 
     return Future.value(products);
