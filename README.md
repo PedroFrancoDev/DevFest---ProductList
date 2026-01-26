@@ -10,6 +10,15 @@ O projeto utiliza uma combinação de Clean Architecture e MVVM (Model-View-View
 - **ui**: interface do usuário e view models (MVVM)
 - **config/di**: configuração e injeção de dependências
 
+## Tech Stack
+- Flutter
+- Dart
+- Clean Architecture
+- MVVM
+- GetIt (Dependency Injection)
+- GitHub Actions (CI/CD)
+- Firebase App Distribution
+
 Essa abordagem separa claramente as responsabilidades, facilitando manutenção, testes e evolução do app.
 
 ## Principais Pastas
