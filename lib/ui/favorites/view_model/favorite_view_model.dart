@@ -1,7 +1,8 @@
-import 'package:dev_fest_product_list/data/models/entities/product/product_entity.dart';
+import 'package:dev_fest_product_list/domain/entities/product/product_entity.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class FavoriteViewModel extends ChangeNotifier {
   final IProductRepository _productRepository;
@@ -22,6 +23,7 @@ class FavoriteViewModel extends ChangeNotifier {
       (failure) {
         isFavoriteViewLoading = false;
         notifyListeners();
+        Logger().e(failure.message);
       },
       (favoriteProductsResponse) {
         favoriteProducts.clear();
@@ -32,6 +34,7 @@ class FavoriteViewModel extends ChangeNotifier {
 
         isFavoriteViewLoading = false;
         notifyListeners();
+        Logger().i(favoriteProducts);
       },
     );
   }
@@ -55,12 +58,15 @@ class FavoriteViewModel extends ChangeNotifier {
           failure.message,
           type: MessageType.error,
         );
+
+        Logger().e(failure.message);
       },
       (success) {
         favoriteProducts.removeWhere((product) => product.id == productId);
 
         isFavoriteViewLoading = false;
         notifyListeners();
+        Logger().i(success);
       },
     );
   }

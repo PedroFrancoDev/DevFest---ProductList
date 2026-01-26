@@ -1,4 +1,4 @@
-import 'package:dev_fest_product_list/data/models/entities/product/product_entity.dart';
+import 'package:dev_fest_product_list/domain/entities/product/product_entity.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:flutter/material.dart';
 

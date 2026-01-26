@@ -1,9 +1,10 @@
-import 'package:dev_fest_product_list/data/models/entities/banner/banner_entity.dart';
-import 'package:dev_fest_product_list/data/models/entities/product/product_entity.dart';
+import 'package:dev_fest_product_list/domain/entities/banner/banner_entity.dart';
+import 'package:dev_fest_product_list/domain/entities/product/product_entity.dart';
 import 'package:dev_fest_product_list/data/repository/i_banner_repository.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/utils/snackbar_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final IProductRepository _productRepository;
@@ -30,12 +31,16 @@ class HomeViewModel extends ChangeNotifier {
       (failure) {
         isHomeLoading = false;
         notifyListeners();
+        Logger().e(failure);
       },
       (productsResponse) {
+        final result = productsResponse.map((e) => e.toEntity());
         products.clear();
-        products.addAll(productsResponse.map((e) => e.toEntity()));
+        products.addAll(result);
         isHomeLoading = false;
         notifyListeners();
+
+        Logger().i(products);
       },
     );
   }
@@ -49,7 +54,7 @@ class HomeViewModel extends ChangeNotifier {
     });
   }
 
-  Future<void> removeOrAddProductToFavorites({
+  Future<void> toggleFavoriteStatus({
     required String productId,
     required BuildContext context,
     required bool isFavorite,
@@ -59,12 +64,16 @@ class HomeViewModel extends ChangeNotifier {
         : await _productRepository.removeFromFavorites(productId);
 
     result.fold(
-      (failure) => SnackbarHelper.showModernMessage(
-        context,
-        failure.message,
-        type: MessageType.error,
-      ),
+      (failure) {
+        Logger().e(failure);
+        SnackbarHelper.showModernMessage(
+          context,
+          failure.message,
+          type: MessageType.error,
+        );
+      },
       (favoriteProductResponse) {
+        Logger().i(favoriteProductResponse);
         return;
       },
     );

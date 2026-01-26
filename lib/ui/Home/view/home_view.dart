@@ -198,9 +198,9 @@ class _HomePageState extends State<HomePage> {
                                     },
                                     child: ProductCard(
                                       product: product,
-                                      removeOrAddProductToFavorites: (value) =>
+                                      toggleFavoriteStatus: (value) =>
                                           viewModel
-                                              .removeOrAddProductToFavorites(
+                                              .toggleFavoriteStatus(
                                                 context: context,
                                                 productId: product.id,
                                                 isFavorite: value,

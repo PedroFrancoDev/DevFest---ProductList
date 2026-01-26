@@ -1,4 +1,4 @@
-import 'package:dev_fest_product_list/data/models/entities/banner/banner_entity.dart';
+import 'package:dev_fest_product_list/domain/entities/banner/banner_entity.dart';
 
 class BannerDto {
   late List<String> imageUrls;

@@ -43,17 +43,28 @@ class _RegisterProductsState extends State<RegisterProducts> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  "Esta tela representa o painel de administração do aplicativo, desenvolvido exclusivamente para fins didáticos.",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               _buildButtonWidget(
                 isLoading: viewModel.isCreatingProducts,
                 text: "Criar lista de Produtos",
                 onTap: () => viewModel.createProduct(context),
               ),
-              SizedBox(height: 10),
-              _buildButtonWidget(
-                isLoading: viewModel.isAddingBanners,
-                text: "Adicionar Imagens do Banner",
-                onTap: () => viewModel.addBannerImages(context),
-              ),
+              // SizedBox(height: 10),
+              // _buildButtonWidget(
+              //   isLoading: viewModel.isAddingBanners,
+              //   text: "Adicionar Imagens do Banner",
+              //   onTap: () => viewModel.addBannerImages(context),
+              // ),
             ],
           );
         },
