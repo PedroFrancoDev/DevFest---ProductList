@@ -8,4 +8,5 @@ abstract class IProductRepository {
   Future<Either<Failure, bool>> addToFavorites(String productId);
   Future<Either<Failure, bool>> removeFromFavorites(String productId);
   Future<Either<Failure, bool>> createProductList(List<ProductDto> products);
+  Future<Either<Failure, List<ProductDto>>> searchProducts(String query);
 }

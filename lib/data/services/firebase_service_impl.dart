@@ -116,4 +116,23 @@ class FirebaseServiceImpl extends IFirebaseService {
       return Left(Failure(message: FirebaseErrorMessages.fromException(e)));
     }
   }
+  
+ @override
+  Future<Either<Failure, List<ProductDto>>> searchProducts(String query) async {
+    try {
+      final snapshot = await db
+          .collection('products')
+          .where('name', isGreaterThanOrEqualTo: query)
+          .where('name', isLessThanOrEqualTo: '$query\uf8ff')
+          .get();
+
+      final products = snapshot.docs.map((doc) {
+        return ProductDto.fromJson(doc.data());
+      }).toList();
+
+      return Right(products);
+    } on FirebaseException catch (e) {
+      return Left(Failure(message: e.message ?? "Erro ao pesquisar produtos"));
+    }
+  }
 }

@@ -59,10 +59,22 @@ class ProductRepositoryImpl implements IProductRepository {
     return Future.value(result);
   }
 
+  
+
   @override
   Future<Either<Failure, List<ProductDto>>> geAllProducts() async {
     final products = await firebaseService.getProducts();
 
     return Future.value(products);
+  }
+  
+@override
+  Future<Either<Failure, List<ProductDto>>> searchProducts(String query) async {
+    try {
+     final products = await firebaseService.searchProducts(query);
+     return Future.value(products);
+    } on FirebaseException catch (e) {
+      return Left(Failure(message: e.message ?? "Erro ao pesquisar produtos"));
+    }
   }
 }

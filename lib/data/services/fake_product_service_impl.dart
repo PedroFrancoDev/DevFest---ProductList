@@ -144,4 +144,9 @@ class FakeProductService implements IFirebaseService {
   Future<Either<Failure, List<BannerDto>>> getBannerImages() {
     throw UnimplementedError();
   }
+  
+  @override
+  Future<Either<Failure, List<ProductDto>>> searchProducts(String query) {
+    throw UnimplementedError();
+  }
 }

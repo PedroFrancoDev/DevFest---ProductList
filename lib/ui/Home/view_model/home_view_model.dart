@@ -16,13 +16,15 @@ class HomeViewModel extends ChangeNotifier {
   }) : _productRepository = productRepository,
        _iBannerRepository = iBannerRepository;
 
-  final List<ProductEntity> products = [];
-  final List<BannerEntity> bannerImages = [];
+  List<ProductEntity> products = [];
+  List<BannerEntity> bannerImages = [];
 
   bool isHomeLoading = false;
+  bool isSearchMode = false;
 
-  void geAllProducts() async {
+  Future<void> geAllProducts() async {
     isHomeLoading = true;
+    isSearchMode = false;
     notifyListeners();
 
     final result = await _productRepository.geAllProducts();
@@ -34,24 +36,45 @@ class HomeViewModel extends ChangeNotifier {
         Logger().e(failure);
       },
       (productsResponse) {
-        final result = productsResponse.map((e) => e.toEntity());
-        products.clear();
-        products.addAll(result);
+        products = productsResponse.map((e) => e.toEntity()).toList();
         isHomeLoading = false;
         notifyListeners();
-
-        Logger().i(products);
       },
     );
   }
 
-  void getAllBannerImages() async {
+  Future<void> getAllBannerImages() async {
     final result = await _iBannerRepository.getBannerImages();
-
-    result.fold((_) {}, (r) {
-      products.clear();
-      bannerImages.addAll(r.map((e) => e.toEntity()));
+    result.fold((failure) => Logger().e(failure), (response) {
+      bannerImages = response.map((e) => e.toEntity()).toList();
+      notifyListeners();
     });
+  }
+
+  Future<void> searchProducts(String query) async {
+    if (query.isEmpty) {
+      geAllProducts();
+      return;
+    }
+
+    isHomeLoading = true;
+    isSearchMode = true;
+    notifyListeners();
+
+    final result = await _productRepository.searchProducts(query);
+
+    result.fold(
+      (failure) {
+        isHomeLoading = false;
+        notifyListeners();
+        Logger().e(failure);
+      },
+      (productsResponse) {
+        products = productsResponse.map((e) => e.toEntity()).toList();
+        isHomeLoading = false;
+        notifyListeners();
+      },
+    );
   }
 
   Future<void> toggleFavoriteStatus({
@@ -64,18 +87,12 @@ class HomeViewModel extends ChangeNotifier {
         : await _productRepository.removeFromFavorites(productId);
 
     result.fold(
-      (failure) {
-        Logger().e(failure);
-        SnackbarHelper.showModernMessage(
-          context,
-          failure.message,
-          type: MessageType.error,
-        );
-      },
-      (favoriteProductResponse) {
-        Logger().i(favoriteProductResponse);
-        return;
-      },
+      (failure) => SnackbarHelper.showModernMessage(
+        context,
+        failure.message,
+        type: MessageType.error,
+      ),
+      (success) => Logger().i("Status de favorito alterado"),
     );
   }
 }

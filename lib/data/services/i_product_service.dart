@@ -10,4 +10,5 @@ abstract class IFirebaseService {
   Future<Either<Failure, bool>> addToFavorites(String productId);
   Future<Either<Failure, bool>> addBannerImages(List<BannerDto> bannerImages);
   Future<Either<Failure, bool>> removeFromFavorites(String productId);
+  Future<Either<Failure, List<ProductDto>>> searchProducts(String query);
 }
