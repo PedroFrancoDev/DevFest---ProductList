@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:dev_fest_product_list/data/models/banner.dart';
-import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/data/models/dto/banner/banner_dto.dart';
+import 'package:dev_fest_product_list/data/models/dto/product/product_dto.dart';
 import 'package:dev_fest_product_list/data/services/i_product_service.dart';
 import 'package:dev_fest_product_list/domain/failures/failure.dart';
 
 class FakeProductService implements IFirebaseService {
   @override
-  Future<Either<Failure, List<ProductModel>>> getProducts() async {
+  Future<Either<Failure, List<ProductDto>>> getProducts() async {
     await Future.delayed(const Duration(milliseconds: 400));
 
     return Right([
-      ProductModel(
+      ProductDto(
         id: '1',
         name: "New Balance 574",
         price: 149.99,
@@ -28,7 +28,7 @@ class FakeProductService implements IFirebaseService {
         rating: 4.6,
       ),
 
-      ProductModel(
+      ProductDto(
         id: '2',
         name: "Nike Air Force 1",
         price: 169.99,
@@ -46,7 +46,7 @@ class FakeProductService implements IFirebaseService {
         rating: 4.8,
       ),
 
-      ProductModel(
+      ProductDto(
         id: '3',
         name: "Adidas NMD R1",
         price: 179.99,
@@ -63,7 +63,7 @@ class FakeProductService implements IFirebaseService {
         rating: 4.4,
       ),
 
-      ProductModel(
+      ProductDto(
         id: '4',
         name: "Asics Gel-Kayano 30",
         price: 199.99,
@@ -81,7 +81,7 @@ class FakeProductService implements IFirebaseService {
         rating: 4.9,
       ),
 
-      ProductModel(
+      ProductDto(
         id: '5',
         name: "Puma Clyde All-Pro",
         price: 139.99,
@@ -99,7 +99,7 @@ class FakeProductService implements IFirebaseService {
         rating: 4.3,
       ),
 
-      ProductModel(
+      ProductDto(
         id: '6',
         name: "Vans Old Skool",
         price: 119.99,
@@ -120,33 +120,33 @@ class FakeProductService implements IFirebaseService {
   }
   
   @override
-  Future<Either<Failure, bool>> createProductList(List<ProductModel> products) {
-    // TODO: implement createProduct
+  Future<Either<Failure, bool>> createProductList(List<ProductDto> products) {
     throw UnimplementedError();
   }
   
   @override
   Future<Either<Failure, bool>> addToFavorites(String productId) {
-    // TODO: implement addToFavorites
     throw UnimplementedError();
   }
   
   @override
   Future<Either<Failure, bool>> removeFromFavorites(String productId) {
-    // TODO: implement removeFromFavorites
     throw UnimplementedError();
   }
   
   @override
   Future<Either<Failure, bool>> addBannerImages(
-    List<BannerModel> bannerImages) {
-    // TODO: implement addBannerImages
+    List<BannerDto> bannerImages) {
     throw UnimplementedError();
   }
   
   @override
-  Future<Either<Failure, List<BannerModel>>> getBannerImages() {
-    // TODO: implement getBannerImages
+  Future<Either<Failure, List<BannerDto>>> getBannerImages() {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Either<Failure, List<ProductDto>>> searchProducts(String query) {
     throw UnimplementedError();
   }
 }

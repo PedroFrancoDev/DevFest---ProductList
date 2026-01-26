@@ -1,18 +1,18 @@
 import 'dart:ui';
-import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/domain/entities/product/product_entity.dart';
 import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dev_fest_product_list/ui/core/widgets/favorite_button.dart';
 
 class ProductCard extends StatelessWidget {
-  final ProductModel product;
+  final ProductEntity product;
   final bool favoriteActionEnabled;
-  final Function(bool value) removeOrAddProductToFavorites;
+  final Function(bool value) toggleFavoriteStatus;
 
   const ProductCard({
     super.key,
     required this.product,
-    required this.removeOrAddProductToFavorites,
+    required this.toggleFavoriteStatus,
     this.favoriteActionEnabled = true,
   });
 
@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
                 decoration: BoxDecoration(color: Colors.black.withAlpha(25)),
                 child: FavoriteButton(
                   favoriteActionEnabled: favoriteActionEnabled,
-                  onChanged: (value) => removeOrAddProductToFavorites(value),
+                  onChanged: (value) => toggleFavoriteStatus(value),
                   isFavorite: product.isFavorite,
                   size: 18,
                 ),

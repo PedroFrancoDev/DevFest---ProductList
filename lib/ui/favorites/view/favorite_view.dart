@@ -1,5 +1,5 @@
 import 'package:dev_fest_product_list/config/di/injector.dart';
-import 'package:dev_fest_product_list/data/models/product.dart';
+import 'package:dev_fest_product_list/domain/entities/product/product_entity.dart';
 import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
 import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:dev_fest_product_list/ui/favorites/view_model/favorite_view_model.dart';
@@ -105,7 +105,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   childAspectRatio: 0.75,
                 ),
                 itemBuilder: (context, index) {
-                  final ProductModel favoriteProduct =
+                  final ProductEntity favoriteProduct =
                       viewModel.favoriteProducts[index];
 
                   return GestureDetector(
@@ -119,7 +119,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     },
                     child: ProductCard(
                       product: favoriteProduct,
-                      removeOrAddProductToFavorites: (value) =>
+                      toggleFavoriteStatus: (value) =>
                           viewModel.removeProductToFavorites(
                             context: context,
                             productId: favoriteProduct.id,

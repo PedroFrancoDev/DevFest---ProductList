@@ -16,7 +16,7 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  int _currentImage = 0;
+  // int _currentImage = 0;
   int _selectedSize = 1;
   int _quantity = 1;
 
@@ -214,7 +214,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           style: TextStyle(fontSize: 13, color: Colors.black54),
                         ),
                         Text(
-                          '\$' + (viewModel.product.price * _quantity).toStringAsFixed(2),
+                          '\$${(viewModel.product.price * _quantity).toStringAsFixed(2)}',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

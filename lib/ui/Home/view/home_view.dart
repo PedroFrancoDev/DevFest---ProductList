@@ -1,9 +1,9 @@
+import 'dart:async';
+
 import 'package:dev_fest_product_list/config/di/injector.dart';
-import 'package:dev_fest_product_list/data/repository/i_banner_repository.dart';
-import 'package:dev_fest_product_list/data/repository/i_product_repository.dart';
+
 import 'package:dev_fest_product_list/ui/Home/view/widget/carousel/carousel_page.dart';
 import 'package:dev_fest_product_list/ui/Home/view_model/home_view_model.dart';
-import 'package:dev_fest_product_list/ui/product_details/view/product_details_view.dart';
 import 'package:dev_fest_product_list/ui/core/theme/colors.dart';
 import 'package:dev_fest_product_list/ui/core/widgets/app_bar.dart';
 import 'package:dev_fest_product_list/ui/core/widgets/header_title.dart';
@@ -20,225 +20,163 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final HomeViewModel viewModel = HomeViewModel(
-    productRepository: getIt<IProductRepository>(),
-    iBannerRepository: getIt<IBannerRepository>(),
-  );
+  late final HomeViewModel viewModel;
+  Timer? _debounce;
 
   @override
   void initState() {
     super.initState();
-
+    viewModel = HomeViewModel(
+      productRepository: getIt(),
+      iBannerRepository: getIt(),
+    );
     viewModel.geAllProducts();
+    viewModel.getAllBannerImages();
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      viewModel.searchProducts(query.trim());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        onTap: () {
-          Navigator.of(context).pop();
-        },
-        hasBackButton: false,
-        title: 'DevFest Product List',
-        actionIcon: SvgPicture.asset(
-          "assets/notification.svg",
-          width: 24,
-          height: 24,
-        ),
-      ),
       backgroundColor: Colors.white,
-      body: ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, _) {
-          if (viewModel.isHomeLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryDark3,
-                strokeWidth: 2,
-              ),
-            );
-          }
+      appBar: CustomAppBar(
+        title: 'DevFest Product List',
+        hasBackButton: false,
+        actionIcon: SvgPicture.asset("assets/notification.svg", width: 24),
+        onTap: () {},
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 16),
+          _buildSearchSection(),
+          Expanded(
+            child: ListenableBuilder(
+              listenable: viewModel,
+              builder: (context, _) {
+                if (viewModel.isHomeLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: AppColors.primary),
+                  );
+                }
 
-          // if (viewModel.products.isEmpty) {
-          //   return SizedBox(
-          //     width: double.infinity,
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.center,
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         SizedBox(height: 6),
-          //         Text(
-          //           'Ops! Ocorreu um erro inesperado.',
-          //           style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-          //         ),
-          //         SizedBox(height: 10),
-          //         GestureDetector(
-          //           onTap: () => viewModel.geAllProducts(),
-          //           child: Padding(
-          //             padding: const EdgeInsets.symmetric(horizontal: 24),
-          //             child: SizedBox(
-          //               height: 54,
-          //               width: double.infinity,
-          //               child: ElevatedButton(
-          //                 style: ElevatedButton.styleFrom(
-          //                   backgroundColor: AppColors.primary,
-          //                   shape: RoundedRectangleBorder(
-          //                     borderRadius: BorderRadius.circular(18),
-          //                   ),
-          //                   padding: const EdgeInsets.symmetric(horizontal: 28),
-          //                 ),
-          //                 onPressed: () {},
-          //                 child: const Text(
-          //                   "Tentar novamente",
-          //                   style: TextStyle(
-          //                     fontSize: 17,
-          //                     fontWeight: FontWeight.bold,
-          //                     color: Colors.white,
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   );
-          // }
+                return RefreshIndicator(
+                  onRefresh: () => viewModel.geAllProducts(),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        if (!viewModel.isSearchMode) ...[
+                          const SizedBox(height: 16),
+                          Carousel(),
+                        ],
 
-          return Column(
-            children: [
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(child: buildTextField()),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: SvgPicture.asset(
-                      "assets/Filter.svg",
-                      width: 20,
-                      height: 20,
-                      colorFilter: ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 8),
-
-                      Carousel(),
-                      const SizedBox(height: 24),
-                      HeaderTitle(
-                        title: "Produtos em Alta",
-                        istitleRigth: false,
-                        horizontalPadding: 24,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 24,
-                          right: 24,
-                          bottom: 24,
-                          top: 20,
+                        const SizedBox(height: 24),
+                        HeaderTitle(
+                          title: viewModel.isSearchMode
+                              ? "Resultados da Busca"
+                              : "Produtos em Alta",
+                          horizontalPadding: 24,
                         ),
-                        child: viewModel.products.isEmpty
-                            ? SizedBox(
-                                width: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 100),
-                                    Text(
-                                      'Nenhum produto encontrado.',
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        color: Colors.grey[600],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : GridView.builder(
-                                itemCount: viewModel.products.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 18,
-                                      mainAxisSpacing: 18,
-                                      childAspectRatio: 0.75,
-                                    ),
-                                itemBuilder: (context, index) {
-                                  final product = viewModel.products[index];
 
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ProductDetailsPage(
-                                                productId: product.id,
-                                              ),
-                                        ),
-                                      );
-                                    },
-                                    child: ProductCard(
-                                      product: product,
-                                      removeOrAddProductToFavorites: (value) =>
-                                          viewModel
-                                              .removeOrAddProductToFavorites(
-                                                context: context,
-                                                productId: product.id,
-                                                isFavorite: value,
-                                              ),
-                                    ),
-                                  );
-                                },
-                              ),
-                      ),
-                    ],
+                        _buildProductGrid(),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ],
-          );
-        },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget buildTextField() {
+  Widget _buildSearchSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: TextField(
+                onChanged: _onSearchChanged,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  icon: SvgPicture.asset("assets/Search.svg", width: 20),
+                  hintText: "Buscar produtos",
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          _buildFilterButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilterButton() {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      width: double.infinity,
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: TextField(
-        enabled: false,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          icon: SvgPicture.asset("assets/Search.svg", width: 20, height: 20),
-          hintText: "Buscar produtos",
-          hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
-        ),
+      child: SvgPicture.asset(
+        "assets/Filter.svg",
+        width: 20,
+        colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
       ),
+    );
+  }
+
+  Widget _buildProductGrid() {
+    if (viewModel.products.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.only(top: 100),
+        child: Text("Nenhum produto encontrado."),
+      );
+    }
+
+    return GridView.builder(
+      itemCount: viewModel.products.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(24),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 18,
+        mainAxisSpacing: 18,
+        childAspectRatio: 0.75,
+      ),
+      itemBuilder: (context, index) {
+        final product = viewModel.products[index];
+        return ProductCard(
+          product: product,
+          toggleFavoriteStatus: (isFav) => viewModel.toggleFavoriteStatus(
+            productId: product.id,
+            context: context,
+            isFavorite: isFav,
+          ),
+        );
+      },
     );
   }
 }
